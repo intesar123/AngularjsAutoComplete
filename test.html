@@ -1,0 +1,106 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+    <meta charset="utf-8" />
+    <link href="Content/bootstrap.min.css" rel="stylesheet" />
+    <link href="scripts/jquery-ui.css" rel="stylesheet" />
+    <link href="css/font-awesome.min.css" rel="stylesheet" />
+    <script src="scripts/jquery-1.9.1.min.js"></script>
+    <link href="scripts/jquery-ui.css" rel="stylesheet" />
+    <script src="scripts/jquery-ui-1.11.2.js"></script>
+    <script src="scripts/bootstrap.min.js"></script>
+    <script src="scripts/angular.min.js"></script>
+   
+    <script>
+        angular.module('app', []).config(function () { });
+
+        angular.module('app').controller('FormGenerationController', function ($scope) {
+
+            $scope.dataarr = [];
+
+            $scope.addNewData = function () {
+                var newItemNo = $scope.dataarr.length + 1;
+                $scope.dataarr.push({ 'id': 'data' + newItemNo });
+            };
+
+            $scope.removeData = function (index) {
+                $scope.dataarr.splice(index, 1);
+            };
+            $scope.availableTags = [
+      "ActionScript",
+      "AppleScript",
+      "Asp",
+      "BASIC",
+      "C",
+      "C++",
+      "Clojure",
+      "COBOL",
+      "ColdFusion",
+      "Erlang",
+      "Fortran",
+      "Groovy",
+      "Haskell",
+      "Java",
+      "JavaScript",
+      "Lisp",
+      "Perl",
+      "PHP",
+      "Python",
+      "Ruby",
+      "Scala",
+      "Scheme"
+            ];
+            $scope.complete = function (event) {
+               // alert(event.target.attributes.id.value);
+                $("#" + event.target.attributes.id.value).autocomplete({
+                    source: $scope.availableTags
+                });
+            }
+
+        });
+        
+
+    </script>
+</head>
+<body ng-app="app" ng-controller="FormGenerationController">
+    <form class="form-horizontal" role="form" name="discountForm">
+            <table class="table table-responsive">
+                
+                <thead>
+                    <tr><th colspan="3"><h3 class="text-center">Simple Dynamic Table</h3></th></tr>
+                    <tr>
+                        <th>
+                            Code
+                        </th>
+                        <th>
+                            Name
+                        </th>
+                        <th>
+                            Action
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr data-ng-repeat="data in dataarr">
+                        <td>
+                            <input type="text" ng-model="data.code" name="" ng-keyup="complete($event)" id="code{{$index}}" placeholder="Enter Code">
+                        </td>
+                        <td>
+                            <input type="text" ng-model="data.name"  ng-keyup="complete($event)" id="name{{$index}}" placeholder="Enter Name">
+                        </td>
+                        <td>
+                            <button class="remove" ng-click="removeData($index)">-</button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        <button class="addfields" ng-click="addNewData()">Add fields</button>
+
+        <div id="choicesDisplay">
+            {{ dataarr }}
+        </div>
+        
+    </form>
+</body>
+</html>
